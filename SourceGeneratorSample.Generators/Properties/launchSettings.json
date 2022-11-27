@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "SourceGeneratorSample.Generators": {
+      "commandName": "Project"
+    }
+  }
+}
