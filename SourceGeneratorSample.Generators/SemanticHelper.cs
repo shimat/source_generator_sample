@@ -4,7 +4,10 @@ using Microsoft.CodeAnalysis;
 
 namespace SourceGeneratorSample.Generators;
 
-public static class SemanticHelper
+/// <summary>
+/// https://github.com/Grauenwolf/Tortuga-TestMonkey/blob/8ac61e82fed1cd417074b2cde3a845461d10a26e/Tortuga.TestMonkey/Tortuga.TestMonkey/SemanticHelper.cs
+/// </summary>
+internal static class SemanticHelper
 {
     /// <summary>
     /// Returns the full namespace for a symbol.
@@ -14,7 +17,7 @@ public static class SemanticHelper
     public static string FullNamespace(this ISymbol symbol)
     {
         var parts = new Stack<string>();
-        INamespaceSymbol? iterator = (symbol as INamespaceSymbol) ?? symbol.ContainingNamespace;
+        var iterator = (symbol as INamespaceSymbol) ?? symbol.ContainingNamespace;
         while (iterator != null)
         {
             if (!string.IsNullOrEmpty(iterator.Name))
@@ -32,7 +35,7 @@ public static class SemanticHelper
     //[return: NotNullIfNotNull("symbol")]
     public static string? FullName(this INamedTypeSymbol? symbol)
     {
-        if (symbol == null)
+        if (symbol is null)
             return null;
 
         var prefix = FullNamespace(symbol);
@@ -44,11 +47,10 @@ public static class SemanticHelper
 
         if (prefix != "")
             return prefix + "." + symbol.Name + suffix + symbol.NullableToken();
-        else
-            return symbol.Name + suffix + symbol.NullableToken();
+        return symbol.Name + suffix + symbol.NullableToken();
     }
 
-    static string CollectTypeArguments(IReadOnlyList<ITypeSymbol> typeArguments)
+    private static string CollectTypeArguments(IReadOnlyList<ITypeSymbol> typeArguments)
     {
         var output = new List<string>();
         for (var i = 0; i < typeArguments.Count; i++)
@@ -74,7 +76,7 @@ public static class SemanticHelper
     /// </summary>
     /// <param name="symbol">The symbol being examined.</param>
     /// <returns></returns>
-    static string NullableToken(this ITypeSymbol symbol)
+    private static string NullableToken(this ITypeSymbol symbol)
     {
         if (symbol.IsValueType || symbol.NullableAnnotation != NullableAnnotation.Annotated)
             return "";

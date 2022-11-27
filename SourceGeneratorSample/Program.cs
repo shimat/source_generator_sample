@@ -1,12 +1,17 @@
-﻿using System.Text.Json;
-using SourceGeneratorSample.Generators;
+﻿using SourceGeneratorSample.Generators;
 
 namespace SourceGeneratorSample;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
+        IRunner runner = 
+            new RunnerStj();
+            //new RunnerStjCustom();
+            //new RunnerJsonNet();
+        runner.Run();
+
         /*
         var foo = new Foo(
             0,1,2,3,4,5,6,7,8,9,
@@ -29,8 +34,10 @@ class Program
             0,1,2,3,4,5,6,7,8,9,
             0,1,2,3,4,5,6,7,8,9,
             0,1,2,3,4,5,6,7,8,9,
-            0,1,2,3,4,5,6,7,8,9);*/
+            0,1,2,3,4,5,6,7,8,9);
+        //*/
 
+        //var json = $"{{ {string.Join(", ", Enumerable.Range(0, 64).Select(i => $"\"V{i}\": {i}"))} }}";
         //var json = $"{{ {string.Join(", ", Enumerable.Range(0, 2480).Select(i => $"\"V{i}\": {i}"))} }}";
         //var json = $"{{ {string.Join(", ", Enumerable.Range(0, 502).Select(i => $"\"V{i}\": {i}"))} }}";
         //var foo = JsonSerializer.Deserialize<Foo>(json);
@@ -39,8 +46,7 @@ class Program
         {
             Converters = { new FooConverterFactory() }
         });*/
-        var foo = new Foo(1, 2);
-        Console.WriteLine(foo);
+        //Console.WriteLine(foo);
 
         /*
         var json = $"{{ {string.Join(", ", Enumerable.Range(0, 65).Select(i => $"\"V{i}\": {i}"))} }}";
@@ -49,18 +55,3 @@ class Program
         */
     }
 }
-
-/*
-[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-public sealed class PropertyCountAttribute : Attribute
-{
-    public int Count { get; }
-    public PropertyCountAttribute(int count)
-    {
-        Count = count;
-    }
-} */
-
-[PropertyCount(2)]
-public partial record Foo;
-public partial record Bar;

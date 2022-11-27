@@ -2,9 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<IsRoslynComponent>true</IsRoslynComponent>
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
+		<IsRoslynComponent>true</IsRoslynComponent>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -13,6 +13,15 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+	</ItemGroup>
+
+	<PropertyGroup>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 
 </Project>
