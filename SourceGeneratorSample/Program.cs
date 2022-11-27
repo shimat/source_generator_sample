@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using SourceGeneratorSample.Generators;
 
 namespace SourceGeneratorSample;
 
@@ -30,14 +31,15 @@ class Program
             0,1,2,3,4,5,6,7,8,9,
             0,1,2,3,4,5,6,7,8,9);*/
 
-        var json = $"{{ {string.Join(", ", Enumerable.Range(0, 2480).Select(i => $"\"V{i}\": {i}"))} }}";
+        //var json = $"{{ {string.Join(", ", Enumerable.Range(0, 2480).Select(i => $"\"V{i}\": {i}"))} }}";
         //var json = $"{{ {string.Join(", ", Enumerable.Range(0, 502).Select(i => $"\"V{i}\": {i}"))} }}";
         //var foo = JsonSerializer.Deserialize<Foo>(json);
         //var foo = Newtonsoft.Json.JsonConvert.DeserializeObject<Foo>(json);
-        var foo = JsonSerializer.Deserialize<Foo>(json, new JsonSerializerOptions
+        /*var foo = JsonSerializer.Deserialize<Foo>(json, new JsonSerializerOptions
         {
             Converters = { new FooConverterFactory() }
-        });
+        });*/
+        var foo = new Foo(1, 2);
         Console.WriteLine(foo);
 
         /*
@@ -59,6 +61,6 @@ public sealed class PropertyCountAttribute : Attribute
     }
 } */
 
-[PropertyCount(2460)]
+[PropertyCount(2)]
 public partial record Foo;
 public partial record Bar;
