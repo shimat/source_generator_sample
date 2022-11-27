@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -8,7 +7,8 @@ namespace SourceGeneratorSample.Generators;
 
 internal class SyntaxContextReceiver : ISyntaxContextReceiver
 {
-    public List<WorkItem> WorkItems { get; } = new();
+    private List<(INamedTypeSymbol TargetRecord, int PropertyCount)> workItems = new();
+    public IReadOnlyList<(INamedTypeSymbol TargetRecord, int PropertyCount)> WorkItems => workItems;
 
     /// <summary>
     /// Called for every syntax node in the compilation, we can inspect the nodes and save any information useful for generation
@@ -31,18 +31,6 @@ internal class SyntaxContextReceiver : ISyntaxContextReceiver
         if (value is null) 
             return;
 
-        WorkItems.Add(new WorkItem(targetRecord, (int)value));
-    }
-}
-
-internal class WorkItem
-{
-    public INamedTypeSymbol TargetRecord { get; }
-    public int PropertyCount { get; }
-
-    public WorkItem(INamedTypeSymbol targetRecord, int propertyCount)
-    {
-        TargetRecord = targetRecord ?? throw new ArgumentNullException(nameof(targetRecord));
-        PropertyCount = propertyCount;
+        workItems.Add((targetRecord, (int)value));
     }
 }
