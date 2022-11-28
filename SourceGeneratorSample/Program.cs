@@ -4,10 +4,11 @@ class Program
 {
     static void Main()
     {
-        IRunner runner = 
+        IRunner runner =
             //new RunnerStj();
-            new RunnerStjCustom();
+            //new RunnerStjCustom();
             //new RunnerJsonNet();
+            new RunnerReflection();
         runner.Run();
     }
 }

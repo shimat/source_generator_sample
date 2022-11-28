@@ -26,11 +26,12 @@ public class ManyPropertiesSourceGenerator : ISourceGenerator
             var typeName = w.TargetRecord.Name;
             var parameterString = string.Join(", ", Enumerable.Range(0, w.PropertyCount).Select(i => $"int V{i}"));
 
-            var source = $@"// auto-generated
-namespace {namespaceName};
+            var source = $"""
+                // auto-generated
+                namespace {namespaceName};
 
-public partial record {typeName}({parameterString});
-";
+                public partial record {typeName}({parameterString});
+                """;
 
             context.AddSource($"{typeName}.generated.cs", source);
         }
